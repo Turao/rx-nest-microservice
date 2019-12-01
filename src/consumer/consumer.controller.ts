@@ -1,4 +1,4 @@
-import { Controller, Inject, OnApplicationBootstrap } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ConsumerService } from './consumer.service';
 import { Logger } from '@nestjs/common';
 import {
@@ -12,13 +12,7 @@ import {
 export class ConsumerController {
   private readonly logger = new Logger();
 
-  @Client({
-    transport: Transport.RMQ,
-    options: {
-      isGlobalPrefetchCount: false,
-      queueOptions: { consumerTag: 'consumer' },
-    },
-  })
+  @Client({ transport: Transport.RMQ })
   private readonly messageBrokerClient: ClientProxy;
 
   constructor(private readonly service: ConsumerService) {}
