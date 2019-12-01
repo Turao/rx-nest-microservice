@@ -1,19 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
-import { Transport } from '@nestjs/common/enums/transport.enum';
+import { clientOptions as heroClientOptions } from './grpcHero/hero.client';
 
 const logger = new Logger();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const microservice = app.connectMicroservice({
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://localhost:5672'],
-      queue: 'default',
-    },
-  });
+  app.connectMicroservice(heroClientOptions);
   await app.startAllMicroservicesAsync();
   await app.listen(3000);
 }
