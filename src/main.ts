@@ -1,20 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
-import { Transport } from '@nestjs/common/enums/transport.enum';
-
 const logger = new Logger();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const microservice = app.connectMicroservice({
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://localhost:5672'],
-      queue: 'default',
-    },
-  });
+
+  logger.debug('Starting microservices...');
   await app.startAllMicroservicesAsync();
+  logger.debug('Microservices started');
+
   await app.listen(3000);
+  logger.debug('Listening on port: ' + 3000);
 }
 bootstrap();
