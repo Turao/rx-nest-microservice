@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  nestjs-microservices:
+    build: .
+    ports: 
+      - '3000:3000'
+    depends_on:
+      - rabbitmq
+    network_mode: host
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports: 
+      - '15672:15672'
+      - '5672:5672'
+    network_mode: host
