@@ -1,25 +1,17 @@
 import { Controller } from '@nestjs/common';
 import { ConsumerService } from './consumer.service';
 import { Logger } from '@nestjs/common';
-import {
-  ClientProxy,
-  EventPattern,
-  Client,
-  Transport,
-} from '@nestjs/microservices';
+import { EventPattern } from '@nestjs/microservices';
 
 @Controller()
 export class ConsumerController {
   private readonly logger = new Logger();
 
-  @Client({ transport: Transport.RMQ })
-  private readonly messageBrokerClient: ClientProxy;
-
   constructor(private readonly service: ConsumerService) {}
 
-  @EventPattern('message')
+  @EventPattern('event')
   async onEvent(data: any): Promise<any> {
-    this.logger.debug('Received Event:' + data);
+    this.logger.debug('Received Event: ' + data);
     return this.service.doSomethingWithPayload(data);
   }
 }

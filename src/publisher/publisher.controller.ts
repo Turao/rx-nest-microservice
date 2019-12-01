@@ -15,6 +15,6 @@ export class PublisherController {
   @Get('event/:type')
   async doSomething(@Param('type') eventType: string) {
     this.logger.debug('Emitting event to RabbitMQ: ' + eventType);
-    this.messageBrokerClient.emit<string>('message', eventType);
+    this.messageBrokerClient.emit('event', eventType);
   }
 }

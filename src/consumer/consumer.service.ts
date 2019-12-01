@@ -5,8 +5,8 @@ import { Logger } from '@nestjs/common';
 export class ConsumerService {
   private readonly logger = new Logger();
 
-  async doSomethingWithPayload(data: any) {
-    this.logger.debug('doing something with event payload...');
-    return data;
+  async doSomethingWithPayload(payload: any) {
+    this.logger.debug('Doing something with event payload...' + payload);
+    return payload;
   }
 }
